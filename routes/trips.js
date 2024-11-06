@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
     Trip.find({
       departure : req.body.departure,
       arrival : req.body.arrival,
-      date : new Date(`${req.body.date}`)
+      date : req.body.date
     })
     .then(data => {
         res.json({ allTrains: data });

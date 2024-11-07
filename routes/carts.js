@@ -22,7 +22,7 @@ router.post('/paid/:id', (req, res) => {
     trip: req.params.id,
   })
     .then(data => {
-      data['isPaid'] = true
+      data.isPaid = true
       return data.save()
     })
     .then(() => {

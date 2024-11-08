@@ -17,19 +17,16 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/paid/:id', (req, res) => {
+router.post('/paid/:tripID', (req, res) => {
   Cart.findOne({
-    trip: req.params.id,
+    trip: req.params.tripID,
   })
     .then(data => {
-      data.isPaid = true
+      data['isPaid'] = true
       return data.save()
     })
-    .then(() => {
-      return Cart.find().populate('trip');
-    })
     .then(data => {
-      res.json({ data });
+    res.json({ data });
     });
 });
 

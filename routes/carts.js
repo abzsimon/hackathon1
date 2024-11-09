@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 require('../models/connection');
 const Cart = require('../models/cart');
-const moment = require('moment');
 
+// ajoute un voyage au panier (collection cart) et le mettant en statut pas payé
 router.post('/', (req, res) => {
   Cart.create({
     trip: req.body.tripID,
@@ -17,6 +17,20 @@ router.post('/', (req, res) => {
     });
 });
 
+// supprime un voyage du panier (collection cart)
+router.delete('/', (req, res) => {
+  Cart.deleteOne({
+    trip: req.body.tripID,
+  })
+    .then(()=> {
+      Cart.find()
+      .then(data => {
+        res.json(data)
+      })
+    })
+});
+
+// modifie le statut d'un voyage du panier (collection cart) en payé
 router.post('/paid/:tripID', (req, res) => {
   Cart.findOne({
     trip: req.params.tripID,
